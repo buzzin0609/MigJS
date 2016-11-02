@@ -1,3 +1,13 @@
+/**
+ * Ajax function. Similar to jQuery but with fewer options.
+ * @param {Object} args - object containing all the arguments for the request
+ *     @param {String} url - url for the ajax request
+ *     @param {String} type - type of request - default = GET
+ *     @param {Function} beforeSend - function to fire before the ajax request is sent
+ *     @param {Function} success - callback for after the request
+ *     @param {Function} error - callback for when an error occurs
+ *     @param {Object} data - data to pass with the request
+ */
 Mig.extend('ajax', function(args) {
 
     args = args || {};
@@ -8,6 +18,8 @@ Mig.extend('ajax', function(args) {
     var success = args.success || false;
     var error = args.error || false;
     var data = args.data || false;
+
+	//serialise the data object if it exists into a query string
     var queryString = '?';
     if (type === 'POST') {
         queryString = '';
@@ -19,6 +31,7 @@ Mig.extend('ajax', function(args) {
             }
         }
     }
+
     var request = new XMLHttpRequest();
     if (type === 'GET') {
         request.open('GET', url + queryString, true);

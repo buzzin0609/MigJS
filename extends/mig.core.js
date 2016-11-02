@@ -1,36 +1,65 @@
+/**
+ * Collection of core convenience functions to be used with the main Mig selector engine
+ */
 ;(function(doc) {
     'use strict';
+	/**
+	 * Generates a random floating point number between the min and max (inclusive)
+	 */
     Mig.extend('random', function(min, max) {
         return Math.random() * (max - min) + min;
     });
+	/**
+	 * Generates a random integer between the min and max (inclusive)
+	 */
     Mig.extend('randomInt', function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     });
+	/**
+	 * Wrapper function around Element.classList.add to conveniently add classes to a Mig element collection
+	 * @param {String} a - a list of classes to add separated by a space
+	 */
     Mig.extend('addClass', function(a) {
         this.forEach(function(b) {
             b.classList.add.apply(b.classList, a.split(' '));
         });
         return this;
     });
+	/**
+	 * Wrapper function around Element.classList.remove to conveniently remove classes to a Mig element collection
+	 * @param {String} a - a list of classes to remove separated by a space
+	 */
     Mig.extend('removeClass', function(a) {
         this.forEach(function(b) {
             b.classList.remove.apply(b.classList, a.split(' '));
         });
         return this;
     });
+	/**
+	 * Wrapper function around Element.classList.toggle to conveniently toggle classes to a Mig element collection
+	 * @param {String} a - a list of classes to toggle separated by a space
+	 */
     Mig.extend('toggleClass', function(a) {
         this.forEach(function(b) {
             b.classList.toggle.apply(b.classList, a.split(' '));
         });
         return this;
     });
+	/**
+	 * Wrapper function around Element.style.cssText to add a string of CSS to a Mig element collection
+	 * @param {String} a - string of CSS properties to add to the element.
+	 */
     Mig.extend('css', function(a) {
         this.forEach(function(b) {
             b.style.cssText = a;
         });
     });
-    //a = target
-    //b, ret = placeholder that will be parent elements.
+	/**
+	 * Get the parent element
+	 * @param {String} a - a dom selector string of the desired parent element - Optional
+	 * @param {undefined} b - placeholder variable which will be the retainer of parent elements
+	 * @return {Object} Mig object containing a Mig element collection of the designated parent elements if selector provided or collection of closest parent elements
+	 */
     Mig.extend('parent', function(a, b) {
         b = [];
         this.forEach(function(c) {
@@ -48,8 +77,10 @@
         b.reverse();
         return m(b);
     });
-    //a = target
-    //b, ret = placeholder that will be parent elements.
+	/**
+	 * Get all parent elements
+	 * FUNCTION NOT COMPLETE
+	 */
     Mig.extend('parents', function(a, b, ret) {
         b = [];
         if (a) {
@@ -60,7 +91,7 @@
             if (!a) {
                 while(d) {
                     if (b.indexOf(d) === -1) {
-                        b.push(d)
+                        b.push(d);
                     }
                     d = d.parentElement;
                 }
@@ -79,12 +110,16 @@
         return m(b);
     });
 
+	/**
+	 * Function to retrieve element position relative to the window
+	 * @return {Object} position with x and y coordinates
+	 */
     Mig.extend('position', function() {
         var xPosition = 0;
         var yPosition = 0;
         xPosition += (this[0].offsetLeft - this[0].scrollLeft + this[0].clientLeft);
         yPosition += (this[0].offsetTop - this[0].scrollTop + this[0].clientTop);
         this[0] = this[0].offsetParent;
-        return { x: xPosition, y: yPosition }
+        return { x: xPosition, y: yPosition };
     });
 }(document));

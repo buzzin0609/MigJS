@@ -1,3 +1,7 @@
+/**
+ * Convenience object that detects browsers and browser versions
+ * @return {Object} browser with the browser name in lowercase and version as properties
+ */
 (function() {
     'use strict';
     var browser = false;
@@ -104,5 +108,6 @@
         });
     });
 
+	//fires on initialisation to store the current browser and version
     Mig.browser();
 }());
