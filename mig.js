@@ -4,7 +4,7 @@
 	/**
 	 * Main selector function
 	 * @param  {String} b String selector
-	 * @param  {undefined} c Placeholder variable to use
+	 * @param  {undefined} c Placeholder variable to use for the start of the b variable string.
 	 * @param  {undefined} i Placeholder to use for selector length
 	 * @param  {undefined} d Placeholder to use for selector incrementor
 	 * @return {mixed}   Mixed return of either single Element, HTMLCollection, or NodeList
