@@ -31,13 +31,30 @@
         return Object.keys(hash);
     });
     /**
+     * Helper to concatenate two className strings
+     * @param {Array} a, b Arrays of class strings
+     */
+    Mig.extend('_addClass', function (a, b) {
+        return Mig.unique(a, b);
+    });
+    /**
+     * Helper to concatenate two className strings
+     * @param {Array} a array of class strings from the target element
+     * @param {Array} b array of class strings to remove
+     */
+    Mig.extend('_removeClass', function (a, b) {
+        return a.filter(function (c) {
+            return b.indexOf(c) === -1;
+        });
+    });
+    /**
      * Function to conveniently add classes to a Mig element collection
      * @param {String} a - a list of classes to add separated by a space
      */
     Mig.extend('addClass', function (a) {
         var c = a.split(' ');
         this.forEach(function (b) {
-            b.className = Mig.unique(b.className.split(' '), c).join(' ');
+            b.className = Mig._addClass(b.className.split(' '), c).join(' ');
         });
         return this;
     });
@@ -49,19 +66,28 @@
         var c = a.split(' ');
         console.log(c);
         this.forEach(function (b) {
-            b.className = b.className.split(' ').filter(function (d) {
-                return c.indexOf(d) === -1;
-            }).join(' ');
+            b.className = Mig._removeClass(b.className.split(' '), c).join(' ');
         });
         return this;
     });
     /**
-     * Wrapper function around Element.classList.toggle to conveniently toggle classes to a Mig element collection
+     * Function to conveniently toggle classes to a Mig element collection
      * @param {String} a - a list of classes to toggle separated by a space
      */
     Mig.extend('toggleClass', function (a) {
+        var c = a.split(' ');
         this.forEach(function (b) {
-            b.classList.toggle.apply(b.classList, a.split(' '));
+            var toAdd = [];
+            var toRemove = [];
+            for (var i = 0, l = c.length; i < l; i++) {
+                if (b.className.indexOf(c[i]) !== -1) {
+                    toRemove.push(c[i]);
+                } else {
+                    toAdd.push(c[i]);
+                }
+            }
+            var d = Mig._removeClass(b.className.split(' '), toRemove);
+            b.className = Mig._addClass(d, toAdd).join(' ');
         });
         return this;
     });
