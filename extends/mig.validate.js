@@ -1,3 +1,6 @@
+/**
+ * NOT FINISHED
+ */
 Mig.extend('validate', function(type, input) {
 
     var functions = {

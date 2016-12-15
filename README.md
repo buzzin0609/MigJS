@@ -13,6 +13,7 @@ var divs = m('div');
 //wrap already selected elements in the Mig object
 var divs = document.getElementsByTagName('div');
 var mDivs = m(divs);
+//when Mig.on.js is included
 mDivs.on('click', myFunc);
 ```
 
@@ -66,20 +67,25 @@ var newList = m('divs').map(function(el) {
 - Mig.addClass
 - Mig.removeClass
 - Mig.toggleClass
-- Mig.css
+- Mig.css - simple wrapper over element.style.cssText. NOT to be used like jQuery.css
 - Mig.parent
 - Mig.parents (NOT COMPLETE)
-- Mig.position
+- Mig.position - returns x,y instead of top,left like jQuery. I just prefer to use axis for position properties
 
-### Static utility functions
+### Static utility functions in core.js
 - Mig.random
 - Mig.randomInt
 - Mig.unique
 
-##Other available extensions
-- Mig.ajax : mig.ajax.js
+##Other available extensions - see file for more information on usage
+- Mig.on : mig.on.js - Event handling system. Uses a publish/subscribe like system to register events on elements and also for general Event registering/triggering
+- Mig.delegate : mig.delegate.js - For delegating events on elements
+- Mig.ajax : mig.ajax.js - AJAX wrapper similar to jQuery's $.ajax
+- Mig.create : mig.create.js - A neat static utility function to create DOM elements in a similar style to ReactJS. Uses insertAdjacentHTML and appendChild to handle mixed strings and elements for adding children
+- Mig.goto : mig.goto.js - Utility function for smooth scrolling
+- Mig.serialize : mig.serialse.js - Create a key/value pair object from a collection of form input elements
+- Mig.browser : mig.browser.js - Simple function to give browser name/version of the current user. Uses the navigator.userAgent property so use at your own risk! When included, it will add boolean properties to the main Mig object like Mig.isChrome, Mig.isFirefox etc for your convenience
 
 TODO: 
-- Finish README
-- Add list of available extension functions and usage
-- Clean up files and add comments
+- Add more detailed usage information for each function
+- Add module support

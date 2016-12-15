@@ -28,9 +28,16 @@
         // acceleration until halfway, then deceleration
         easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
     }
+    /**
+     * A simple scrolling animation function to a target element
+     * @param {Mixed} target a CSS selection string or DOM element
+     * @param {Element} scrollEl a DOM element used as the scrolling context. For when you want to scroll inside a div with a scrollbar instead of the document
+     * @param {Number} duration the time in milliseconds to scroll
+     * @param {String} ease a string for the ease value from any of the above
+     */
     Mig.extend('goto', function(target, scrollEl, duration, ease) {
         duration = duration || 1500;
-        target = target || this[0].getAttribute('data-target');
+        
         var position = m(target).position().y;
         ease = ease && Ease[ease] || Ease.easeInOutCubic;
         var start = scrollEl && scrollEl.scrollTop || doc.documentElement.scrollTop || doc.body.scrollTop;
