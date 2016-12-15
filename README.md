@@ -26,8 +26,6 @@ divs.addClass('hey new classes');
 divs.removeClass('hey').addClass('newer');
 
 
-
-```
 //fire function on document ready
 Mig.on('ready', function() {
   //document is ready, do something
