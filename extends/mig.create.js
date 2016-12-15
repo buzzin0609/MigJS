@@ -17,7 +17,6 @@ Mig.extend('create', function(tag, attrs, children) {
 
     if (Object.keys(attrs).length) {
         Object.keys(attrs).forEach(function(attr) {
-            console.log(el, attr);
             el.setAttribute(attr, attrs[attr]); 
         });
     }
