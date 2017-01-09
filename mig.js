@@ -13,7 +13,7 @@
         c = b[0];
         i = b.length;
         d = 0;
-        while (i--) {
+        while (i-- && c !== 'q') {
             switch(b[i]) {
                 case '.':
                     d++;
@@ -30,9 +30,10 @@
                 break;
             }
         }
-        if (d > 1) {
-            c = 'q';
-        }
+		if (d > 1) {
+			c = 'q';
+		}
+
         switch(c) {
             case '#' :
             return [doc.getElementById(b.substr(1))];
@@ -43,34 +44,29 @@
         }
     }
 
-	/**
-	 *
-	 * @param  {Boolean} thisArg so the elements get pushed to each call of Mig
-	 * @param  {Mixed}  els     contains the result of _lookup
-	 * @return {Object} Mig instance         Returns an instance of Mig with prototype functions and Array functions
-	 */
-    function _init(thisArg, els) {
-        return arr.push.apply(thisArg, els);
-    }
-
     /**
      * The main Mig function
      * @param {Mixed} selector either a CSS string selector or DOM element(s)
      * @param {undefined} els placeholder variable for the future DOM array
+	 * @return {Object} Mig instance         Returns an instance of Mig with prototype functions and Array functions
      */
     function Mig(selector, els) {
         els = '' + selector === selector && _lookup(selector) || selector[0] && selector || [selector];
-        return _init(this, els);
+		return this.push.apply(this, els);
     }
 
     /**
      * The selector function exposed to the global scope. Takes the same selector param as above but returns a new instance of Mig
      */
     win.m = function(a) {
-        return new Mig(a);
+		// console.time('find');
+		// var b = new Mig(a);
+		// console.timeEnd('find');
+        // return b;
+		return new Mig(a);
     };
 
-    //This is key, it adds all Array prototype functions and acts like an array instead of an object. You can still assign functions to the prototype like an object. 
+    //This is key, it adds all Array prototype functions and acts like an array instead of an object. You can still assign functions to the prototype like an object.
     Mig.prototype = [];
 
     /**

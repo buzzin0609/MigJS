@@ -4,20 +4,26 @@
  * @param {String} tag The element tag e.g. h1, div etc
  * @param {Object} attrs All the attributes to apply to the tag
  * @param {Array} children A mixed array of Strings and elements to add as children
- * 
+ *
  * Usage:
- * 
+ *
  * var el = Mig.create('h1', { class: 'my-class' }, ['can have plain text', ' mixed text and <span>html</span>', Mig.create('span', {}, ['or another Mig.create instance'])]);
  * document.body.appendChild(el);
  */
 Mig.extend('create', function(tag, attrs, children) {
     var el = document.createElement(tag);
-    attrs = attrs || {};
-    children = children || [];
+
+	if (attrs && attrs instanceof Array) {
+		children = [].slice.call(attrs);
+		attrs = {};
+	} else {
+		attrs = attrs || {};
+		children = children || [];
+	}
 
     if (Object.keys(attrs).length) {
         Object.keys(attrs).forEach(function(attr) {
-            el.setAttribute(attr, attrs[attr]); 
+            el.setAttribute(attr, attrs[attr]);
         });
     }
     if (children.length) {
@@ -30,7 +36,7 @@ Mig.extend('create', function(tag, attrs, children) {
             } else {
                 el.appendChild(child);
             }
-        }); 
+        });
     }
     return el;
 });
