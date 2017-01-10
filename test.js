@@ -1,6 +1,5 @@
 
-console.time('menu');
-(function Menu() {
+function Menu() {
 	var items = [
 		{
 			'url' : '#',
@@ -21,8 +20,11 @@ console.time('menu');
 				Mig.create('a', {'href': item.url}, [item.title])
 			]);
 		}))
-	]), document.body);
-}());
+	]), document.getElementById('main'));
+}
+
+console.time('menu');
+Menu();
 console.timeEnd('menu');
 
 var Post = function(data) {
@@ -36,11 +38,11 @@ Mig.json({
 	url: 'https://jsonplaceholder.typicode.com/posts'
 })
 .then(function(posts) {
-	console.log('data', posts);
+	// console.log('data', posts);
 	console.time('render');
 
-	Mig.render(Mig.create('div', posts.map(function(post) {
+	Mig.render(Mig.create('div', { class: 'posts' }, posts.map(function(post) {
 		return Post(post);
-	})), document.body);
+	})), document.getElementById('main'));
 	console.timeEnd('render');
 });

@@ -67,7 +67,7 @@
     };
 
     //This is key, it adds all Array prototype functions and acts like an array instead of an object. You can still assign functions to the prototype like an object.
-    Mig.prototype = [];
+    Mig.prototype = Object.create([]);
 
     /**
      * The main extension function

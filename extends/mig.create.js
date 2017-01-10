@@ -21,11 +21,11 @@ Mig.extend('create', function(tag, attrs, children) {
 		children = children || [];
 	}
 
-    if (Object.keys(attrs).length) {
-        Object.keys(attrs).forEach(function(attr) {
-            el.setAttribute(attr, attrs[attr]);
-        });
-    }
+	var attr;
+	for (attr in attrs) {
+		el.setAttribute(attr, attrs[attr])
+	}
+    
     if (children.length) {
         /**
          * Children array can have a mix of strings and javascript DOM elements. It looks for the string and uses the more optimised insertAdjacentHTML or simple appends the child to the element.
