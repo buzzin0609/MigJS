@@ -1,4 +1,3 @@
-
 function Menu() {
 	var items = [
 		{
@@ -34,11 +33,9 @@ var Post = function(data) {
 	]);
 }
 
-Mig.json({
-	url: 'https://jsonplaceholder.typicode.com/posts'
-})
+Mig.json({ url: 'https://jsonplaceholder.typicode.com/posts'})
 .then(function(posts) {
-	// console.log('data', posts);
+	console.log('data', posts);
 	console.time('render');
 
 	Mig.render(Mig.create('div', { class: 'posts' }, posts.map(function(post) {

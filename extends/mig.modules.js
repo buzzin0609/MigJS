@@ -14,7 +14,7 @@
 			cb = deps;
 			deps = false;
 		}
-		
+
 		if (deps) {
 			_inject(name, deps, cb);
 		} else {
@@ -79,7 +79,7 @@
 			reject(new Error(['Dependency: ', dep, ' not found. Check for circular dependencies and try again.'].join('')));
 		} else {
 			++checkCount;
-			setTimeout(_await.bind(_await, dep, resolve, reject, checkCount), 250);
+			setTimeout(_await.bind(_await, dep, resolve, reject, checkCount), 50);
 		}
 	}
 
