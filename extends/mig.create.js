@@ -27,7 +27,7 @@
 
 		var attr;
 		for (attr in attrs) {
-			if (attr !== 'tag') {
+			if (attr !== 'tag' && attrs.hasOwnProperty(attr)) {
 				el.setAttribute(attr, attrs[attr])
 			}
 		}
