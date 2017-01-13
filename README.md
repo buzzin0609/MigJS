@@ -3,7 +3,7 @@ My own DOM/Utility library. It's lightweight, modular and FAST
 
 This is just a personal project I started to grow my knowledge of native Javascript and to get a feeling about what it's like to write an API.
 
-#Basic Usage
+#Basic Usage - DOM selection/traversing
 
 Similar usage to jQuery except you use the global function 'm' for DOM element selection, so:
 
@@ -75,15 +75,54 @@ var newList = m('divs').map(function(el) {
 - Mig.randomInt
 - Mig.unique
 
+
+##Mig Modules
+Version 0.2 comes with simple module and dependency injection support in Mig.modules.js.
+
+The modules rely on Promise support so you will need a polyfill if you want to use this in a wider spectrum of browser environments.
+
+###Defining a Module
+
+Similar to the AMD style:
+
+```
+Mig.module(
+	'myModule', //define the module name
+	'dependency1 dependency2 dependency3', //space separated dependency list
+	function(dep1, dep2, dep3) //callback with dependencies passed as parameters
+	{
+		//use dependencies
+
+		//create your module value by using return
+		return function(params) {
+			//to use in other modules
+			//you can use the dependencies here too
+		};
+	}
+);
+
+//now use myModule somewhere else
+Mig.module(
+	'myModule2', //new name for another module
+	'myModule', //myModule is a dependency
+	function(myModule) //callback with myModule passed in
+	{
+		//use myModule
+	}
+);
+
+```
+
+Modules are not restricted to one per file, but, unlike RequireJS, Mig modules will not load your files for you (not yet).
+
 ##Other available extensions - see file for more information on usage
 - Mig.on : mig.on.js - Event handling system. Uses a publish/subscribe like system to register events on elements and also for general Event registering/triggering
 - Mig.delegate : mig.delegate.js - For delegating events on elements
-- Mig.ajax : mig.ajax.js - AJAX wrapper similar to jQuery's $.ajax
-- Mig.create : mig.create.js - A neat static utility function to create DOM elements in a similar style to ReactJS. Uses insertAdjacentHTML and appendChild to handle mixed strings and elements for adding children
+- Mig.ajax : mig.ajax.js - AJAX wrapper similar to jQuery's $.ajax with Promise like interface
+- Mig.create : mig.create.js - A neat collection of utility functions to create DOM elements or view components in a similar style to ReactJS. More on this coming soon including a core Component function
 - Mig.goto : mig.goto.js - Utility function for smooth scrolling
 - Mig.serialize : mig.serialse.js - Create a key/value pair object from a collection of form input elements
 - Mig.browser : mig.browser.js - Simple function to give browser name/version of the current user. Uses the navigator.userAgent property so use at your own risk! When included, it will add boolean properties to the main Mig object like Mig.isChrome, Mig.isFirefox etc for your convenience
 
-TODO: 
+TODO:
 - Add more detailed usage information for each function
-- Add module support

@@ -1,3 +1,9 @@
+/**
+ * Mig JS
+ * @description - Modular utility Javascript library. Made mostly for fun and personal projects but free to another to use and distribute as they see fit
+ * @author Will Busby
+ * @version 0.2
+ */
 ;(function(win, doc, arr) {
     'use strict';
 
