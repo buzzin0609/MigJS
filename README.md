@@ -73,7 +73,7 @@ var newList = m('divs').map(function(el) {
 ### Static utility functions in core.js
 - Mig.random
 - Mig.randomInt
-- Mig.unique
+- Mig.unique - merge two arrays and return an array with only unique values
 
 
 ##Mig Modules

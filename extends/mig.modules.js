@@ -75,11 +75,11 @@
 
 		if (depsList[dep]) {
 			resolve(depsList[dep]);
-		} else if (checkCount > 50) {
+		} else if (checkCount > 100) {
 			reject(new Error(['Dependency: ', dep, ' not found. Check for circular dependencies and try again.'].join('')));
 		} else {
 			++checkCount;
-			setTimeout(_await.bind(_await, dep, resolve, reject, checkCount), 50);
+			setTimeout(_await.bind(_await, dep, resolve, reject, checkCount), 25);
 		}
 	}
 

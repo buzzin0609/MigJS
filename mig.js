@@ -79,7 +79,11 @@
      * The main extension function
      */
     Mig.prototype.extend = function(name, fn) {
-        Mig.prototype[name] = fn;
+		Object.defineProperty(Mig.prototype, name, {
+			configurable: false,
+			value: fn,
+			writable: false
+		});
     };
 
     /**
