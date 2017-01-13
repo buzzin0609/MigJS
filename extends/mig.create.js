@@ -13,6 +13,12 @@
 (function() {
 	'use strict';
 
+	var raf;
+	if (!window.requestAnimationFrame) {
+		raf = function(cb) { cb(); }
+	} else {
+		raf = window.requestAnimationFrame;
+	}
 
 	Mig.extend('create', function(tag, attrs, children) {
 		var el = document.createElement(tag);
@@ -63,11 +69,12 @@
 	});
 
 	Mig.extend('update', function(name, attrs, data) {
+		var hasData = data;
 		if (typeof attrs === 'string') {
 			data = attrs;
 			attrs = false;
+			hasData = true;
 		}
-
 		var oldObservable = observables[name];
 		if (oldObservable) {
 			if (attrs) {
@@ -81,18 +88,30 @@
 				attrs = oldObservable.attrs
 			}
 
-			if (!data) {
+			if (!hasData) {
 				data = oldObservable.data;
 			}
 		}
 
 		m('[data-watch='+name+']').forEach(function(el) {
-			var newEl = _createObservable(name, attrs, data);
-			if (newEl.outerHTML !== el.outerHTML) {
-				el.outerHTML = newEl.outerHTML;
-				return newEl;
-			} else {
-				return el;
+			if (!oldObservable) { return; }
+			if (hasData && data !== oldObservable.data) {
+				raf(function() {
+					if (_isHTML(data)) {
+						el.innerHTML = data;
+					} else {
+						el.textContent = data;
+					}
+					_setObservable(name, attrs, data, el);
+				});
+			}
+			if (attrs) {
+				var attr;
+				for (attr in attrs) {
+					if (attr !== 'tag' && attrs.hasOwnProperty(attr)) {
+						oldObservable.domEl.setAttribute(attr, attrs[attr]);
+					}
+				}
 			}
 		});
 	});
@@ -114,12 +133,24 @@
 
 		var tag = attrs.tag && attrs.tag || 'span';
 		attrs[key] = name;
+		var el = Mig.create(tag, attrs, [data]);
+		//not adding again after!
+		_setObservable(name, attrs, data, el);
+
+		return el;
+	}
+
+	function _setObservable(name, attrs, data, el) {
 		observables[name] = {
 			attrs : attrs,
-			data : data
+			data : data,
+			domEl : el
 		};
+	}
 
-		return Mig.create(tag, attrs, [data]);
+	function _isHTML(str) {
+		// console.log(str);
+		return /.+?<\\?.+[\s+?.+?]?>/g.test(str);
 	}
 
 }());
